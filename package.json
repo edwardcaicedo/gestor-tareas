@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/edwardcaicedo/gestor-tareas/issues"
   },
-  "homepage": "https://github.com/edwardcaicedo/gestor-tareas#readme"
+  "homepage": "https://github.com/edwardcaicedo/gestor-tareas#readme",
+  "dependencies": {
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "mongodb": "^7.7.0"
+  }
 }
