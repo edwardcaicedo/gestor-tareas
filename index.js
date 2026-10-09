@@ -10,7 +10,6 @@ async function conectar() {
         await cliente.connect();
         const db = cliente.db('gestor_tareas');
         tareas = db.collection('tareas');
-        await tareas.insertOne({ titulo: 'Prueba', completada: false });
         console.log('Conectado a MongoDB');
     } catch (error) {
         console.log('No se pudo conectar:', error.message);
