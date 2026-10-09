@@ -1,0 +1,20 @@
+{
+  "name": "gestor-tareas",
+  "version": "1.0.0",
+  "description": "Meta del Sprint 1: al terminar el Sprint, el usuario podrá escribir una tarea y verla en una lista de tareas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwardcaicedo/gestor-tareas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edwardcaicedo/gestor-tareas/issues"
+  },
+  "homepage": "https://github.com/edwardcaicedo/gestor-tareas#readme"
+}
