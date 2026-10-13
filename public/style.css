@@ -1,0 +1,37 @@
+body {
+    background-color: #6664f8;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    text-transform: capitalize;
+}
+.contenedor_tereas {
+    max-width: 500px;
+    margin: 40px auto;
+    border: 2px solid white;
+    min-height: auto;
+    padding: 25px;
+}
+
+.pantalla {
+    width: 80%;
+}
+
+.btnTarea {
+    background-color: rgb(146, 146, 5);
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: black;
+    border: none;
+}
+
+.listaTarea li {
+    color: white;
+    font-weight: bold;
+    text-transform: capitalize;
+    line-height: 2;
+}

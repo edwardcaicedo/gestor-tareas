@@ -4,13 +4,10 @@ const { MongoClient } = require('mongodb');
 
 const app = express();
 app.use(express.json());
+app.use(express.static('public'));
+
 const cliente = new MongoClient(process.env.MONGO_URI);
 let tareas;
-
-app.get('/', function (req, res) {
-    res.send('Servidor funcionando');
-});
-
 
 app.post('/tareas', async function (req, res) {
     const titulo = req.body.titulo;
@@ -28,14 +25,15 @@ app.post('/tareas', async function (req, res) {
     }
 });
 
-app.get('/tareas', async function listaTarea(req, res) {
-    const lista = await tareas.find({}).toArray();
-
-    return res.status(200).json(lista);
-})
-
-
-
+app.get('/tareas', async function (req, res) {
+    try {
+        const lista = await tareas.find({}).toArray();
+        res.json(lista);
+    } catch (error) {
+        console.log('Error al leer:', error.message);
+        res.status(500).json({ error: 'No se pudieron leer las tareas' });
+    }
+});
 
 async function iniciar() {
     try {
