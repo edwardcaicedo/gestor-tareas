@@ -1,14 +1,81 @@
+
 const inputTitulo = document.querySelector('.pantalla');
 const btnTarea = document.querySelector('.btnTarea');
 const mensajes = document.querySelector('.mensajes');
 const listaTarea = document.querySelector('.listaTarea');
+const listraTarea = document.querySelector('#listraTarea')
 
 // Dibuja UNA tarea en la lista
 function mostrarTarea(tarea) {
     const li = document.createElement('li');
+    const span = document.createElement('span');
+
+    const btnModificar = document.createElement('button');
+
+    btnModificar.textContent = 'Modificar';
+    btnModificar.classList = 'btnTarea'
     li.textContent = tarea.titulo;
     li.dataset.id = tarea._id;
-    listaTarea.append(li);
+
+    if(tarea.completada){
+        span.textContent = '(completada)';
+        tarea.completada = true;
+    }else {
+        tarea.completada = false;
+        span.textContent = '(pendiente)';
+    }
+
+    span.addEventListener('dblclick', async function() {
+        try {
+            const respuesta = await fetch(`/tareas/${tarea._id}/estado`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ completada: !tarea.completada })
+            });
+
+            if(respuesta.ok){
+                await cargarTareas();
+            }else {
+                alert('No se pudo cambiar el estado')
+            }
+        }catch(error){
+            console.log('Error de conexion: ', error)
+        }
+  
+    })
+     
+    
+
+    btnModificar.addEventListener('click', async function(){
+        console.log('clic en modificar', tarea.titulo);
+        const nuevoTitulo = prompt('Escribe un nuevo titulo: ', tarea.titulo);
+        
+        if(nuevoTitulo !== null && nuevoTitulo.trim() !== ''){
+            try {
+                const respuesta = await fetch(`/tareas/${tarea._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ titulo: nuevoTitulo})
+                });
+
+                if(respuesta.ok){
+                    tarea.titulo = nuevoTitulo.trim();
+                    await cargarTareas();
+                }else {
+                    alert('No se pudo actualizar la tarea');
+                }
+            } catch(error){
+                console.log('Error de conexion: ', error);
+            }
+        }
+
+    })
+
+    li.append(span, btnModificar);
+    listaTarea.append(li); 
+     
 }
 
 // Pide las tareas al servidor y las dibuja
@@ -35,13 +102,17 @@ async function cargarTareas() {
     }
 }
 
+
+
 // Guarda una tarea nueva
 btnTarea.addEventListener('click', async function () {
     const titulo = inputTitulo.value.trim();
 
     if (titulo === '') {
         mensajes.textContent = 'Escribe un título';
-        mensajes.style.color = 'red';
+        setTimeout(() => {
+            mensajes.textContent = ''
+        }, 2000)
         return;
     }
 
