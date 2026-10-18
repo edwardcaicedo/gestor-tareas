@@ -11,19 +11,50 @@ function mostrarTarea(tarea) {
     const span = document.createElement('span');
 
     const btnModificar = document.createElement('button');
-
     btnModificar.textContent = 'Modificar';
-    btnModificar.classList = 'btnTarea'
+    btnModificar.classList = 'btnTarea';
+    
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.classList = 'btnEliminar'
+
     li.textContent = tarea.titulo;
     li.dataset.id = tarea._id;
 
     if(tarea.completada){
         span.textContent = '(completada)';
         tarea.completada = true;
+        li.classList.add('completada');
     }else {
         tarea.completada = false;
         span.textContent = '(pendiente)';
     }
+
+    btnEliminar.addEventListener('click', async function(){
+
+        const aceptar = confirm('¿Eliminar esta tarea?');
+
+        if (!aceptar) {
+            return;
+        }
+        
+        try {
+            const respuesta = await fetch(`/tareas/${tarea._id}`, {method: 'DELETE'});
+
+            if(respuesta.deletedCount === 0){
+                alert('No se pudo eliminar la tarea')
+            }
+
+            if(respuesta.ok){
+                await cargarTareas();
+            }else {
+                alert('No se pudo eliminar la tarea')
+            }
+        }catch(error){
+            console.log('Error de conexion: ', error)
+        }
+    })
+
 
     span.addEventListener('dblclick', async function() {
         try {
@@ -73,7 +104,7 @@ function mostrarTarea(tarea) {
 
     })
 
-    li.append(span, btnModificar);
+    li.append(span, btnModificar, btnEliminar);
     listaTarea.append(li); 
      
 }

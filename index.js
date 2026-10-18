@@ -112,6 +112,29 @@ app.get('/tareas', async function (req, res) {
     }
 });
 
+app.delete('/tareas/:id', async function(req, res){
+    const id = req.params.id;
+
+    if(!ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No se encontraron tarea'});
+    }
+
+    try {
+        const resultado = await tareas.deleteOne({_id: new ObjectId(id)});
+
+        if(!resultado){
+            return res.status(404).json({error: 'No se encontraron tarea'});
+        }
+
+        res.status(200).json({mensaje: 'tarea eliminada'});
+
+    }catch(error){
+        console.log('Error al buscar la tarea', error.message);
+        res.status(500).json({error: 'No encontro la tarea'});
+
+    }
+});
+
 async function iniciar() {
     try {
         await cliente.connect();

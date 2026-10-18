@@ -29,6 +29,14 @@ h1 {
     border: none;
 }
 
+.btnEliminar{
+    background-color: rgb(134, 3, 3);
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: black;
+    border: none;
+}
 .listaTarea li {
     color: white;
     font-weight: bold;
@@ -41,4 +49,8 @@ h1 {
     margin-left: 8px;
     cursor: pointer;
     padding: 5px;
+}
+
+.completada {
+    text-decoration: line-through;
 }
